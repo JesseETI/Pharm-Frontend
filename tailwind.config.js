@@ -24,7 +24,7 @@ module.exports = {
       'white' : '#FFFFFF'
     }),
     backgroundImage: theme => ({
-      'hero' : 'url("../uwi-hero.png")',
+      'hero' : 'url("../default.jpeg")',
      }),
     extend: {},
   },
