@@ -8,7 +8,7 @@
       <br />
 
       <div class="flex m-10">
-        <img src="@/assets/med.png" alt="" class="product-img w-1/4" />
+        <img :src="product.image" alt="" class="product-img w-1/4" />
 
         <div
           class="product-info ml-40 w-3/4 text-gray-800 flex flex-col justify-between"
@@ -52,15 +52,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      product : null,
+    }
+  },
   methods: {
     addToCart(product) {
       this.$store.dispatch('addToCart', product)
     }
   },
-  computed: {
-    product() {
-      return this.$store.state.products.find((product) => product.slug === this.$route.params.product)
-    },
-  },
+  created() {
+    this.product = this.$store.state.products.find((product) => product.slug === this.$route.params.product)
+  }
 }
 </script>

@@ -10,7 +10,7 @@
         <div
           class="product rounded shadow-md p-2 flex flex-col overflow-hidden"
         >
-          <img src="~/assets/med.png" alt="" class="card-img p-4" />
+          <img :src="product.image" alt="" class="card-img p-4" />
           <div class="content my-5">
             <div class="title flex-1">
               {{ product.product_name }}
