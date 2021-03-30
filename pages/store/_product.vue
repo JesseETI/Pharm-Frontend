@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="m-10 min-h-full min-w-screen min-h-screen">
+    <div class="m-10 min-h-full min-w-screen min-h-screen" v-if="product">
       <h2 class="text-gray-500">
         Store | Category | <span class="text-black">{{ product.product_name }}</span>
       </h2>
@@ -62,8 +62,13 @@ export default {
       this.$store.dispatch('addToCart', product)
     }
   },
-  created() {
-    this.product = this.$store.state.products.find((product) => product.slug === this.$route.params.product)
+  async created() {
+    await this.$axios
+      .$get('product', { params: { slug: this.$route.params.product } })
+      .then((resp) => {
+        this.product = resp
+      })
+      .catch((err) => console.log(err))
   }
 }
 </script>

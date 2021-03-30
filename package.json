@@ -21,6 +21,7 @@
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.12",
     "nuxt-gsap": "^0.1.4",
+    "puppeteer": "^8.0.0",
     "sass-loader": "^10.1.1",
     "vue-slideout": "^1.8.0",
     "vuex-persistedstate": "^4.0.0-beta.3"
@@ -35,6 +36,7 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.4.1",
+    "nuxt-pdf": "^1.4.1",
     "prettier": "^2.2.1"
   }
 }

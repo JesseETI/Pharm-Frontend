@@ -10,7 +10,7 @@ export default ({ store, req }) => {
       'auth.accessToken',
       'auth.refreshToken',
       'auth.user',
-      'cart'
+      'cart',
     ],
     storage: {
       getItem: (key) => {

@@ -15,3 +15,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  created() {
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    if (isAuthenticated) {
+      this.$router.push('/profile')
+    }
+  },
+}
+</script>

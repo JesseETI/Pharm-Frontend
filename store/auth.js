@@ -55,12 +55,12 @@ export const actions = {
     }
 
     await this.$axios
-      .$post('http://0.0.0.0:8080/auth', data, axiosConfig)
+      .$post('/auth', data, axiosConfig)
       .then((resp) => {
         // commit the user and tokens to the state
         alert('Logged in successfully')
         commit(AUTH_MUTATIONS.SET_PAYLOAD, resp)
-        this.$router.push('/')
+        this.$router.push('/profile')
       })
       .catch((err) => {
         console.log(err)
@@ -86,9 +86,10 @@ export const actions = {
     }
 
     await this.$axios
-      .$post('http://0.0.0.0:8080/signup', data, axiosConfig)
+      .$post('/signup', data, axiosConfig)
       .then((resp) => {
-        alert('Customer Profile Created')
+        alert('Your Profile has been created.')
+        this.$router.push('/login')
       })
       .catch((err) => {
         console.log(err)
@@ -124,7 +125,7 @@ export const actions = {
     }
 
     await this.$axios
-      .$get('http://0.0.0.0:8080/user', axiosConfig)
+      .$get('/user', axiosConfig)
       .then((resp) => {
         commit(AUTH_MUTATIONS.SET_USER, resp)
       })

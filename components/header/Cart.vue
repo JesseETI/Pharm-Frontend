@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center min-h-full flex-col">
     <h1 class="text-4xl">Cart</h1>
     <br />
-    <p>Total items: <b>{{itemCount}}</b></p>
+    <p>Total items: <strong>{{itemCount}}</strong></p>
 
     <div class="product flex my-5 w-10/12 p-5 shadow-lg h-screen/4" v-for="product in cart" :key="product.id">
       <img :src="product.image" alt="" class="pr-10" />
@@ -18,7 +18,7 @@
     <p>Total price: <span class="text-lg">${{totalPrice}}</span></p>
     <br>
 
-    <NuxtLink to="/checkout"
+    <NuxtLink to="/checkout" v-if="itemCount != 0"
         class="button bg-primary p-4 w-3/4 text-white mb-10 text-lg text-center"
     >
         Go to Checkout
@@ -39,14 +39,10 @@ export default {
       return this.$store.state.cart
     },
     itemCount() {
-      return this.$store.state.cart.length
+      return this.$store.getters.itemCount
     },
     totalPrice() {
-      let total = 0
-      for (let i = 0; i < this.itemCount; i++) {
-        total += this.$store.state.cart[i].unit_retail_price
-      }
-      return total
+      return this.$store.getters.total
     }
   },
 }

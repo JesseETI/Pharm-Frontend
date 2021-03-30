@@ -9,7 +9,24 @@ export const state = () => ({
 })
 
 // to access state
-export const getters = {}
+export const getters = {
+  total: (state) => {
+    if (state.cart.length > 0) {
+      return state.cart
+        .map((item) => item.unit_retail_price)
+        .reduce((total, amount) => total + amount)
+        .toFixed(2)
+    } else {
+      return 0
+    }
+  },
+  itemCount: (state) => {
+    return state.cart.length
+  },
+  getOrders: (state) => {
+    return state.orders
+  },
+}
 
 // to handle actions
 export const actions = {
@@ -51,7 +68,7 @@ export const actions = {
     }
 
     await this.$axios
-      .$post('http://0.0.0.0:8080/search', data, axiosConfig)
+      .$post('/search', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_RESULTS', resp)
         this.$router.push({ name: 'search', query: { term: searchObj.term } })
@@ -64,16 +81,29 @@ export const actions = {
   setCart({ commit }, cart) {
     commit('SET_CART', cart)
   },
-  async checkout({ commit, state, rootState }) {
+  async getOrders({ commit, rootState }) {
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'JWT ' + rootState.auth.accessToken,
+      },
+    }
+
+    await this.$axios
+      .$get('/orders', axiosConfig)
+      .then((resp) => {
+        commit('SET_ORDERS', resp)
+      })
+      .catch((err) => console.log(err))
+  },
+  async checkout({ commit, state, rootState, getters }) {
     // make an API call to search a term entered in search bar
     const data = JSON.stringify({
       cart: state.cart,
-      item_count: 3,
-      order_total: 150,
+      item_count: getters.itemCount,
+      order_total: getters.total,
       status: 'processing',
     })
-
-    console.log(data)
 
     const axiosConfig = {
       headers: {
@@ -83,10 +113,9 @@ export const actions = {
     }
 
     await this.$axios
-      .$post('http://0.0.0.0:8080/create-order', data, axiosConfig)
+      .$post('/create-order', data, axiosConfig)
       .then((resp) => {
         commit('SET_ORDER', resp)
-        this.$router.push('/profile')
       })
       .catch((err) => {
         console.log(err)
@@ -102,7 +131,8 @@ export const mutations = {
   },
   SET_ORDER(state, order) {
     state.orders.push(order)
-    console.log(state.orders)
+    state.cart = []
+    this.$router.push('/profile')
   },
   SET_PRODUCT_CATEGORIES(state, resp) {
     state.productCategories = resp
@@ -122,5 +152,8 @@ export const mutations = {
   },
   SET_CART(state, cart) {
     state.cart = cart
+  },
+  SET_ORDERS(state, resp) {
+    state.orders = resp
   },
 }
