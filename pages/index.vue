@@ -1,4 +1,5 @@
 <template>
+  <!-- front page -->
   <div>
     <Header />
     <main>
@@ -8,9 +9,4 @@
   </div>
 </template>
 
-<script>
 
-export default {
-  name: 'Index',
-}
-</script>

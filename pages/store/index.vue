@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header />
+    <!-- Store page combines components -->
     <main>
       <div class="m-10">
         <h2 class="text-gray-500">Store</h2>

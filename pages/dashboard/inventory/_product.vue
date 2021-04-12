@@ -124,6 +124,7 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    //work in progress
     changeProductStatus() {
       let payload = {
         "code" : this.product.code,
@@ -146,6 +147,7 @@ export default {
       this.$router.push('/profile')
     }
     else {
+      // get updates on product every creation
       await this.$axios
       .$get('product', { params: { slug: this.$route.params.product } })
       .then((resp) => {

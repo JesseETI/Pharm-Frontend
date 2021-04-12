@@ -1,9 +1,11 @@
 <template>
   <div>
+    <!-- Product display page-->
     <Header />
     <div class="m-10 min-h-full min-w-screen min-h-screen" v-if="product">
       <h2 class="text-gray-500">
-        Store | Category | <span class="text-black">{{ product.product_name }}</span>
+        <!-- Current location within site -->
+        Store | {{product.category}} | <span class="text-black">{{ product.product_name }}</span>
       </h2>
       <br />
 
@@ -19,6 +21,7 @@
             <span class="text-xl">${{ product.unit_retail_price }}</span>
             <br />
             <br />
+            <!-- Product Desc-->
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel
             nunc fermentum, convallis sem vitae, ornare lectus. Interdum et
             malesuada fames ac ante ipsum primis in faucibus. Nam convallis
@@ -27,10 +30,16 @@
             <br />
             <br />
             Code: {{ product.code }}
+            <br/>
+            <br />
+            In stock: {{product.stock_unit}} Units
+            <br/>
+            <br />
           </p>
 
           <div class="product-actions flex">
             <div class="w-1/2 flex items-center">
+             <!-- Change quanity based on button clicks -->
               Quantity:
               <div class="bg-secondary ml-5">
                 <button @click="changeQuantity('-')" class="p-5 border-2-transparent focus:outline-none">-</button>
@@ -55,7 +64,7 @@ export default {
   data() {
     return {
       product : null,
-      quantity: 1
+      quantity: 1 // intial quantity for all products
     }
   },
   methods: {
@@ -63,6 +72,7 @@ export default {
       product["quantity"] = this.quantity
       this.$store.dispatch('addToCart', product)
     },
+    // changes quantity between 1 and stock unit
     changeQuantity(operation) {
       if (operation == '+' && (this.quantity < this.product.stock_unit)) {
         this.quantity += 1 
@@ -76,6 +86,7 @@ export default {
     }
   },
   async created() {
+    // get product details every reload for instant changes
     await this.$axios
       .$get('product', { params: { slug: this.$route.params.product } })
       .then((resp) => {

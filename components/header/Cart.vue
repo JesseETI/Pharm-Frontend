@@ -4,6 +4,7 @@
     <br />
     <p>Total items: <strong>{{itemCount}}</strong></p>
 
+    <!-- list of products-->
     <div class="product flex my-5 w-10/12 p-5 shadow-lg h-screen/4" v-for="product in cart" :key="product.id">
       <img :src="product.image" alt="" class="pr-10" />
       <div class="text">
@@ -37,6 +38,7 @@ export default {
     },
   },  
   computed: {
+    // computed properties so that changes can be reflected instantly
     cart() {
       return this.$store.state.cart
     },

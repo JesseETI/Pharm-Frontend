@@ -1,4 +1,5 @@
 <template>
+  <!-- New product creation page -->
   <div class="flex flex-col w-screen">
     <!--Header-->
     <div class="header flex bg-primary text-white py-10 px-5">

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-primary w-screen h-screen/3 flex items-center justify-center">
     <div class="partitions w-1/2 flex justify-between text-white">
-      
+      <!--Nicely organized links / sitemap of website -->
       <div class="quick-links">
         <h3 class="text-xl">Quick Links</h3>
         <ul aria-label="Quick Links" class="mt-5">

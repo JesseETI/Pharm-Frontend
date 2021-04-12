@@ -17,6 +17,7 @@
 <script>
 export default {
   created() {
+    // prevents authenticated users to signing up again
     let isAuthenticated = this.$store.getters['auth/isAuthenticated']
     if (isAuthenticated) {
       this.$router.push('/profile')

@@ -6,7 +6,7 @@ export default ({ store, req }) => {
   createPersistedState({
     key: 'authentication-cookie', // cookie name
     paths: [
-      // persist the access_token and refreshToken values from the "auth" store module
+      // persist the values from the store modules
       'auth.accessToken',
       'auth.refreshToken',
       'auth.user',

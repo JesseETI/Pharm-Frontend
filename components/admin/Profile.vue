@@ -9,12 +9,12 @@
       class="w-3/12 border-4 p-3 rounded-3xl border-black"
     />
     <h1 class="text-2xl mt-10">
-      <span class="text-blue-600">Welcome</span>, Andhra Maraj
+      <span class="text-blue-600">Welcome</span>, {{admin.first_name}} {{admin.last_name}}
     </h1>
 
     <h2 class="text-sm mt-2">
       logged in as:
-      <span class="text-blue-600">andhra.maraj@gmail.com</span>
+      <span class="text-blue-600">{{admin.email}}</span>
     </h2>
 
     <ul class="mt-20 divide-y-2 w-full li:bg-primary">
@@ -26,3 +26,28 @@
    
   </div>
 </template>
+
+<script>
+export default {
+  // computed so changes will be made instantly
+  computed: {
+    admin() {
+      return this.$store.getters['auth/getUser']
+    },
+  },
+  created() {
+    // if authenticated AND admin, stay, otherwise redirect appropriately
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    let user = this.$store.getters['auth/getUser'] 
+    if (!isAuthenticated) {
+      this.$router.push('/login')
+    }
+    else if (isAuthenticated && user.role == 1) {
+      this.$router.push('/profile')
+    }
+    else {
+      this.$store.dispatch('getUserDetails')
+    }
+  },
+}
+</script>

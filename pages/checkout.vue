@@ -1,4 +1,5 @@
 <template>
+  <!-- Takes products from cart and sends it as an order to API -->
   <div class="my-10 sm:my-20">
     <NuxtLink to="/" class="text-blue-500 underline mx-10 sm:my-10">Go Back</NuxtLink>
 
@@ -84,6 +85,7 @@ export default {
     },
   },
   methods: {
+    //scroll methods for long orders
     scrollToBottom() {
       const container = this.$el.querySelector('.order-review')
       container.scroll({
@@ -108,6 +110,7 @@ export default {
       this.$router.push('/login')
     }
     else {
+      // only lets users view page by ensuring cart is filled out first
       let products = this.$store.state.cart
       if (products.length == 0) {
         alert("Please checkout via cart function.")

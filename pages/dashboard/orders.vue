@@ -4,7 +4,7 @@
     <div class="flex h-90screen">
       <Profile/>
 
-      <!-- order list attached to user -->
+      <!-- order list -->
       <div class="order-info w-9/12 p-5 overflow-auto">
         <div class="flex items-center m-10">
           <h2 class="text-4xl w-1/2">Manage Orders</h2>
@@ -23,6 +23,7 @@
         </div>
 
         <table v-if="orders != ''" class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto">
+         <!-- changes caption and data depending on if a search was made -->
           <caption v-if="!searchedOrders">UWI Pharmacy's past and present orders</caption>
           <caption v-else-if="searchedOrders == ''">No orders were found from your search.</caption>
           <caption v-else>Order(s) found from your search</caption>
@@ -78,9 +79,11 @@ export default {
     }
   },
   methods: {
+    //make search for customers in API
     searchOrder() {
       this.$store.dispatch('searchOrder', this.searchObj)
     },
+     // clear search to see all customers again
     clearSearch() {
       this.$store.state.searchOrderResults = null
     },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--Products-->
+    <!--Products Listing-->
     <div class="flex flex-wrap">
     <div
       v-for="product in products"
@@ -54,6 +54,8 @@ export default {
     },
   },
   mounted() {
+    // calls every mount to check for any instant updates on removal, edit
+    // or creation of products
     this.$store.dispatch('getProducts', 1)
   },
 }

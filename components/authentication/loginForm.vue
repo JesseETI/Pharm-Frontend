@@ -50,6 +50,7 @@ export default {
   },
   methods : {
     login() {
+      // send login to api with user-submitted credentials
       this.$store.dispatch('auth/login', this.user)
     },
   }

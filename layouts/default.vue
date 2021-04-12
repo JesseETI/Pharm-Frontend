@@ -4,6 +4,7 @@
   </div>
 </template>
 
+<!--Default styling for every page in the website -->
 <style>
 *,
 *::before,

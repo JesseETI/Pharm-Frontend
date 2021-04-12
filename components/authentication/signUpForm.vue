@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     signUp() {
+      // send signup to api with user-submitted credentials
       this.$store.dispatch('auth/register', this.user)
     },
   },

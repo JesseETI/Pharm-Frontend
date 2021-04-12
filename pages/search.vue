@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- search function in header goes to this page which shows search results -->
         <Header/>
         <div class="flex flex-wrap">
             <div v-if="products == ''" class="mt-10 text-center w-screen">

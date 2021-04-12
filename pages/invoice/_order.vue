@@ -126,6 +126,7 @@ export default {
     }
   },
   methods: {
+    // scroll methods scroll automatically to review orders with lots of products
     scrollToBottom() {
       const container = this.$el.querySelector('.order-review')
       container.scroll({

@@ -112,7 +112,7 @@ export const actions = {
     commit(AUTH_MUTATIONS.SET_PAYLOAD, payload)
   },
 
-  // logout the user
+  // logout the user and empty auth data from cookies
   logout({ commit, state }) {
     commit(AUTH_MUTATIONS.LOGOUT)
   },
@@ -142,6 +142,7 @@ export const getters = {
   isAuthenticated: (state) => {
     return state.accessToken && state.accessToken !== ''
   },
+  // Get current user details
   getUser: (state) => {
     return state.user
   },

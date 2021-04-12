@@ -1,12 +1,14 @@
-// to handle state
+// centralized store for state/data and mutations for wesbite
 export const state = () => ({
-  products: [],
-  orders: [],
-  userOrders: [],
-  pagination: [],
-  productCategories: [],
-  cart: [],
-  customers: [],
+  products: [], // website products
+  orders: [], // all orders
+  userOrders: [], // orders belonging to current user
+  pagination: [], // page details
+  productCategories: [], // categories
+  cart: [], // products in cart
+  customers: [], // all customers
+
+  // search results for search bars in admin panel
   searchCustomerResults: null,
   searchProductResults: null,
   searchOrderResults: null,
@@ -14,6 +16,7 @@ export const state = () => ({
 
 // to access state
 export const getters = {
+  // total price of (cart, checkout)
   total: (state) => {
     if (state.cart.length > 0) {
       return state.cart
@@ -24,6 +27,7 @@ export const getters = {
       return 0
     }
   },
+  // # of items in cart & checkout
   itemCount: (state) => {
     let itemCount = 0
     state.cart.forEach(function (product) {
@@ -42,21 +46,26 @@ export const getters = {
   },
 }
 
-// to handle actions
+// to handle dispatched actions from pages
+// calls mutations after getting response from backend API
+// JWT Tokens are passed where the Backend needs Authentication credentials
 export const actions = {
+  // get all products from api and store it in state via mutation
   async getProducts({ commit }, pageNo) {
     await this.$axios
       .$get(`products`, { params: { page: pageNo } })
       .then((resp) => commit('SET_PRODUCTS', resp))
       .catch((err) => console.log(err))
   },
+  // get all product categories from api and store it in state via mutation
   async getProductCategories({ commit }) {
     await this.$axios
       .$get(`product_categories`)
       .then((resp) => commit('SET_PRODUCT_CATEGORIES', resp))
       .catch((err) => console.log(err))
   },
-  // Currently implementing
+  // Currently implementing - future proofing instead of next & prev buttons
+  // use numbers
   async getPaginationDetails({ commit }) {
     await this.$axios
       .$get(`products_page`, { params: { page: 1 } })
@@ -114,6 +123,7 @@ export const actions = {
       })
   },
   async getOrders({ commit, rootState }) {
+    // get all orders
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -129,6 +139,7 @@ export const actions = {
       .catch((err) => console.log(err))
   },
   async getUserOrders({ commit, rootState }) {
+    // get user orders
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +155,7 @@ export const actions = {
       .catch((err) => console.log(err))
   },
   async checkout({ commit, state, rootState, getters }) {
-    // make an API call to search a term entered in search bar
+    // checkout and create order from cart with default - processing state
     const data = JSON.stringify({
       cart: state.cart,
       item_count: getters.itemCount,
@@ -185,7 +196,7 @@ export const actions = {
       .catch((err) => console.log(err))
   },
   async searchCustomer({ commit }, searchCustomer) {
-    // make an API call to search a term entered in search bar
+    // make an API call to customer search
     const data = JSON.stringify({
       term: searchCustomer.term,
     })
@@ -207,6 +218,7 @@ export const actions = {
       })
   },
   async changeOrderStatus({ commit, rootState }, payload) {
+    // make change to Order Status - Admin only
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -226,6 +238,7 @@ export const actions = {
       .catch((err) => console.log(err))
   },
   async changeProductStatus({ commit, rootState }, payload) {
+    // admin - change product status
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -245,6 +258,7 @@ export const actions = {
       .catch((err) => console.log(err))
   },
   async createProduct({ commit, rootState }, product) {
+    // create product - admin
     const axiosConfig = {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -261,7 +275,7 @@ export const actions = {
   },
 }
 
-// to handle mutations
+// to handle mutations to code (change in state)
 export const mutations = {
   SET_PRODUCTS(state, resp) {
     state.products = resp

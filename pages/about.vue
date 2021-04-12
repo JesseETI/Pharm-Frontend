@@ -1,6 +1,7 @@
 <template>
   <div>
     <Header />
+    <!-- About Page -->
     <body>
       <main>
         <h1 class="text-4xl mt-10 ml-10 mb-2 text-gray-800">

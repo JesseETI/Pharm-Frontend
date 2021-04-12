@@ -1,6 +1,8 @@
 <template>
   <div>
     <Header />
+
+    <!-- Inventory management page -->
     <div class="flex h-90screen">
       <Profile />
 
@@ -137,27 +139,32 @@ export default {
     }
   },
   methods: {
+    // clear search to see all orders again
     clearSearch() {
       this.$store.state.searchProductResults = null
     },
+    //go to next 20 products
     nextPage() {
       this.pageNo += 1
       this.$store.dispatch('getProducts', this.pageNo)
     },
+    //go to previous 20 products
     previousPage() {
       this.pageNo -= 1
       this.$store.dispatch('getProducts', this.pageNo)
     },
+     //make search for products in API
     searchInventory() {
       this.$store.dispatch('searchProduct', this.searchObj)
     },
+    //delete product
     async deleteProduct(product) {
       if (confirm("Do you want to delete this product?\n" + product.product_name)) { 
       await this.$axios
         .$delete('delete-product', { params: { slug: product.slug } })
         .then((resp) => {
-          alert('Deleted: ' + product.product_name)
           if (resp.deleted) {
+            alert('Deleted: ' + product.product_name)
             if (this.$store.state.searchProductResults == null) {
             const index = this.$store.state.products.findIndex(
               (res) => res.slug === product.slug
