@@ -1,10 +1,10 @@
 <template>
   <div>
     <Header />
-    <div v-if="customer.user" class="flex h-90screen">
+    <div class="flex h-90screen">
       <!-- user profile info -->
       <div
-        class="profile-info w-3/12 text-center flex flex-col items-center pt-10 px-3 shadow-lg"
+        v-if="customer" class="profile-info w-3/12 text-center flex flex-col items-center pt-10 px-3 shadow-lg"
       >
         <img
           src="~assets/icon.png"
@@ -12,24 +12,26 @@
           class="w-3/12 border-4 p-3 rounded-3xl border-black"
         />
         <h1 class="text-2xl mt-10">
-          <span class="text-blue-600">Welcome</span>, {{ customer.user.first_name }}
-          {{ customer.user.last_name }}
+          <span class="text-blue-600">Welcome</span>, {{ customer.first_name }}
+          {{ customer.last_name }}
         </h1>
         <h2 class="text-sm mt-2">
           logged in as:
-          <span class="text-blue-600">{{ customer.user.email }}</span>
+          <span class="text-blue-600">{{ customer.email }}</span>
         </h2>
         <p class="mt-20 mb-10 text-blue-600">Here's your medical profile:</p>
         <p>
-          Your Allergies:<br />{{ customer.allergies }}<br /><br />
-          Medications you take:<br />{{ customer.medicines }}<br /><br />
+          Your Allergies:<br/>{{ customer.allergies }}
+          <br/>
+          <br/>
+          Medications you take:<br/>{{ customer.medicines }}
         </p>
       </div>
       <!-- order list attached to user -->
       <div class="order-info w-9/12 p-5 overflow-auto">
-        <h2 class="text-4xl m-10">Order History</h2>
+        <h2 class="text-4xl m-10">Manage Orders</h2>
 
-        <table class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto">
+        <table v-if="orders != ''" class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto">
           <caption>Your past and present orders</caption>
           <thead>
             <tr class="bg-primary text-white">
@@ -53,6 +55,9 @@
             </tr>
           </tbody>
         </table>
+
+        <p class="text-center" v-else>No orders made from your account yet.</p>
+
       </div>
     </div>
   </div>
@@ -61,9 +66,15 @@
 <script>
 export default {
   name: 'Profile',
+  data() {
+    return {
+      visibleCart: false,
+      searchObj: [],
+    }
+  },
   computed: {
     orders() {
-      return this.$store.getters.getOrders
+      return this.$store.getters.getUserOrders
     },
     customer() {
       return this.$store.getters['auth/getUser']
@@ -72,8 +83,8 @@ export default {
   created() {
     let isAuthenticated = this.$store.getters['auth/isAuthenticated']
     if (isAuthenticated) {
-    this.$store.dispatch('getOrders')
-    this.$store.dispatch('auth/getUserDetails')
+      this.$store.dispatch('getUserOrders')
+      this.$store.dispatch('auth/getUserDetails')
     }
     else {
       this.$router.push('/login')

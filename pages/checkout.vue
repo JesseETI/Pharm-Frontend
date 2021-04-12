@@ -24,7 +24,9 @@
             <div class="text sm:text-sm">
               <p class="font-thin">{{ product.product_name }}</p>
               <br />
-              <p class="font-bold text-xl">${{ product.unit_retail_price }}</p>
+              <p class="font-thin">Quantity: {{ product.quantity }}</p>
+              <br />
+              <p class="font-bold text-xl">Cost: ${{ product.unit_retail_price }}</p>
             </div>
           </div>
         </div>
@@ -99,6 +101,19 @@ export default {
     checkout() {
       this.$store.dispatch('checkout')
     },
+  },
+  created() {
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    if (!isAuthenticated) {
+      this.$router.push('/login')
+    }
+    else {
+      let products = this.$store.state.cart
+      if (products.length == 0) {
+        alert("Please checkout via cart function.")
+        this.$router.push('/store')
+      }
+    }
   },
 }
 </script>

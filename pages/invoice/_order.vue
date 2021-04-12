@@ -2,7 +2,7 @@
   <div v-if="order" class="page a4">
     <div class="flex flex-col w-screen">
       <div class="header flex bg-primary text-white py-10 px-5 place-content-between">
-        <NuxtLink to="/profile" class="underline mx-10">Go Back</NuxtLink>
+        <button @click="goBack" class="underline mx-10 focus:outline-none">Go Back</button>
         <h1 class="text-5xl">Invoice</h1>
 
 
@@ -47,6 +47,8 @@
             <div class="text">
               <p class="font-thin">{{ product.product_name }}</p>
               <br />
+              <p class="font-thin">{{ product.quantity }}</p>
+              <br />
               <p class="font-bold text-xl">${{ product.unit_retail_price }}</p>
             </div>
           </div>
@@ -71,7 +73,21 @@
         <div
           class="m-5 w-1/4 h-screen/2 text-center flex flex-col justify-center"
         >
-          <p>Order Status: {{order.status}}</p>
+          <p v-if="role == 2">
+            Change Order Status:
+            <select class="border-4 border-gray-400 italic" v-model="status" name="orderStatus" id="orderStatus" @change="changeOrderStatus">
+              <option disabled selected hidden :value="null"> -- select an option -- </option>
+              <option value="processing">processing</option>
+              <option value="denied">denied</option>
+              <option value="ready">ready</option>
+            </select>
+          </p>
+          <br/>
+          <p>Order Status: 
+            <span class="text-yellow-600" v-if="currOrderStatus == 'processing'">{{currOrderStatus}}</span>
+            <span class="text-red-600" v-else-if="currOrderStatus == 'denied'">{{currOrderStatus}}</span>
+            <span class="text-green-600" v-else>{{currOrderStatus}}</span>
+            </p>
           <br />
           <p>Order Method: Delivery</p>
           <br />
@@ -79,11 +95,11 @@
           <br />
           <p class="text-xl">Total: ${{ order.order_total }}</p>
           <br />
-          <a href="javascript:if(window.print)window.print()"
+          <button v-if="currOrderStatus == 'ready'" @click="printInvoice"
           class="button bg-primary p-5 text-white text-lg text-center"
           >
             Print Invoice
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -95,6 +111,18 @@ export default {
   data() {
     return {
       order : null,
+      role: 1,
+      status: null
+    }
+  },
+  computed : {
+    currOrderStatus() {
+      if (this.status) {
+        return this.status
+      }
+      else {
+        return this.order.status
+      }
     }
   },
   methods: {
@@ -112,14 +140,44 @@ export default {
         behavior: 'smooth',
       })
     },
+    goBack() {
+      this.$router.go(-1);
+    },
+    printInvoice() {
+      try {
+        // Print for Safari browser
+        document.execCommand('print', false, null)
+      } 
+      catch {
+        //Print for chrome and other normal browsers :)
+        window.print()
+      }
+    },
+    changeOrderStatus() {
+      let payload = {
+        "orderID" : this.order.id,
+        "status" :this.status
+      }
+      this.$store.dispatch('changeOrderStatus', payload)
+    }
   },
   async created() {
-    await this.$axios
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    let user = this.$store.getters['auth/getUser'] 
+
+    if (!isAuthenticated) {
+      this.$router.push('/login')
+    }
+    else {
+      this.role = user.role
+
+      await this.$axios
       .$get('order', { params: { id: this.$route.params.order } })
       .then((resp) => {
         this.order = resp
       })
       .catch((err) => console.log(err))
+      }
   }
 }
 </script>

@@ -35,6 +35,7 @@ export const mutations = {
     state.emailAddress = null
     state.accessToken = null
     state.refreshToken = null
+    state.user = null
     alert('Account has been logged out successfully.')
     this.$router.push('/')
   },
@@ -60,7 +61,7 @@ export const actions = {
         // commit the user and tokens to the state
         alert('Logged in successfully')
         commit(AUTH_MUTATIONS.SET_PAYLOAD, resp)
-        this.$router.push('/profile')
+        this.$router.push('/')
       })
       .catch((err) => {
         console.log(err)

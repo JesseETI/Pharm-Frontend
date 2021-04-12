@@ -11,7 +11,9 @@
         <br />
         <p class="font-thin text-lg">{{product.product_name}}</p>
         <br />
-        <p class="font-bold">${{product.unit_retail_price}}</p>
+        <p class="font-bold">Quantity: {{product.quantity}}</p>
+        <br />
+        <p class="font-bold">Cost: ${{product.unit_retail_price}}</p>
       </div>
     </div>
 

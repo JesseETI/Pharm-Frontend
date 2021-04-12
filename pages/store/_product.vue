@@ -33,9 +33,9 @@
             <div class="w-1/2 flex items-center">
               Quantity:
               <div class="bg-secondary ml-5">
-                <button class="p-5 border-2-transparent">-</button>
-                <span class="p-5">1</span>
-                <button class="p-5 border-2-transparent">+</button>
+                <button @click="changeQuantity('-')" class="p-5 border-2-transparent focus:outline-none">-</button>
+                <span class="p-5">{{quantity}}</span>
+                <button @click="changeQuantity('+')" class="p-5 border-2-transparent focus:outline-none">+</button>
               </div>
             </div>
             <button class="button bg-primary p-4 text-white w-1/2" @click="addToCart(product)">
@@ -55,11 +55,24 @@ export default {
   data() {
     return {
       product : null,
+      quantity: 1
     }
   },
   methods: {
     addToCart(product) {
+      product["quantity"] = this.quantity
       this.$store.dispatch('addToCart', product)
+    },
+    changeQuantity(operation) {
+      if (operation == '+' && (this.quantity < this.product.stock_unit)) {
+        this.quantity += 1 
+      }
+      else if (operation == '-'  && this.quantity > 1) {
+        this.quantity -= 1
+      }
+      else {
+        return 
+      }
     }
   },
   async created() {

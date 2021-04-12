@@ -26,16 +26,24 @@
           src="~assets/profile.png"
           alt=""
           class="pr-10"
-          
         />
         </NuxtLink>
-        <NuxtLink to="/profile" v-show="isAuthenticated">
+        <NuxtLink to="/profile"  v-if="user" v-show="isAuthenticated && user.role == 1">
         <img
           src="~assets/profile.png"
           alt=""
           class="pr-10"
           
         />
+        </NuxtLink>
+        
+        <NuxtLink to="/dashboard" v-if="user" v-show="isAuthenticated && user.role == 2">
+        <img
+          src="~assets/profile.png"
+          alt=""
+          class="pr-10"
+        />
+
         </NuxtLink>
         <img src="~assets/basket.png" alt="" class="pr-10" @click="visibleCart = true"/>
 
@@ -57,9 +65,12 @@
 export default {
   name: 'Header',
   computed: {
+    user() {
+      return this.$store.getters['auth/getUser']
+    },
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated']
-    }
+    },
   },
   data() {
     return {
@@ -69,11 +80,21 @@ export default {
   },
   methods: {
     search() {
-      this.$store.dispatch('search', this.searchObj)
+      this.$store.dispatch('searchProduct', this.searchObj)
+      this.$router.push({
+        name: 'search',
+        query: { term: this.searchObj.term },
+      })
     },
     logout() {
       this.$store.dispatch('auth/logout')
     }
   },
+  created() {
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    if (isAuthenticated) {
+      this.$store.dispatch('auth/getUserDetails')
+    }
+  } 
 }
 </script>

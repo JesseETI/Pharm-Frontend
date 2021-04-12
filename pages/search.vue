@@ -2,7 +2,7 @@
     <div>
         <Header/>
         <div class="flex flex-wrap">
-            <div v-if="products.length == 0" class="mt-10 text-center w-screen">
+            <div v-if="products == ''" class="mt-10 text-center w-screen">
                 <h1 class="text-xl">No products were found with your search terms</h1>
             </div>
             <!--Products-->
@@ -36,7 +36,7 @@ export default {
     name: "search",
     computed: {
         products() {
-        return this.$store.state.searchResults
+            return this.$store.state.searchProductResults
         },
   },
 }

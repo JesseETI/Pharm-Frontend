@@ -1,6 +1,7 @@
 <template>
-  <div class="flex flex-wrap">
+  <div>
     <!--Products-->
+    <div class="flex flex-wrap">
     <div
       v-for="product in products"
       :key="product.id"
@@ -21,18 +22,39 @@
         </div>
       </nuxt-link>
     </div>
+    </div>
+    <!--Navigation Buttons -->
+    <div class="m-auto w-3/12 space-x-10 mt-10">
+      <button class="p-4 w-4/12 bg-primary text-white" @click="previousPage" v-if="pageNo > 1">Previous Page</button>
+      <button class="p-4 w-4/12 bg-primary text-white" @click="nextPage">Next Page</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      pageNo: 1,
+    }
+  },
+  methods: {
+    nextPage() {
+      this.pageNo += 1
+      this.$store.dispatch('getProducts', this.pageNo)
+    },
+    previousPage() {
+      this.pageNo -= 1
+      this.$store.dispatch('getProducts', this.pageNo)
+    }
+  },
   computed: {
     products() {
       return this.$store.state.products
     },
   },
   mounted() {
-    this.$store.dispatch('getProducts')
+    this.$store.dispatch('getProducts', 1)
   },
 }
 </script>

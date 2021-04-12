@@ -1,37 +1,61 @@
 <template>
   <div>
-    <AdminHeader />
-    <div>
-      <NuxtLink to="/dashboard/orderList">
-        <div>
-          <div class="h-200px w-200px"><img src="~assets/box.png" alt="order"  /></div>
-          <div>Manage orders</div>
+    <Header />
+
+    <div class="flex h-90screen">
+      <Profile/>
+
+      <!-- dashboard shortcuts -->
+
+      <div class="dashboard w-9/12 p-5">
+        <h2 class="text-4xl m-10">Admin Dashboard</h2>
+
+        <div class="flex gap-10 text-center">
+          <NuxtLink to="/dashboard/orders">
+            <img
+              src="~assets/box.png"
+              alt=""
+              class="border-4 p-5 border-black rounded-lg hover:bg-primary"
+            />
+            <h2 class="text-xl">Manage Orders</h2>
+          </NuxtLink>
+
+          <NuxtLink to="/dashboard/inventory">
+            <img
+              src="~assets/inventory.png"
+              alt=""
+              class="border-4 p-5 border-black rounded-lg hover:bg-primary"
+            />
+            <h2 class="text-xl">Manage Inventory</h2>
+          </NuxtLink>
+
+          <NuxtLink to="/dashboard/customers">
+            <img
+              src="~assets/customer.png"
+              alt=""
+              class="border-4 p-5 border-black rounded-lg hover:bg-primary"
+            />
+            <h2 class="text-xl">Manage Customers</h2>
+          </NuxtLink>
         </div>
-      </NuxtLink>
-      <NuxtLink to="/dashboard/inventory">
-        <div>
-          <div class="h-193px w-193px"><img src="~assets/inventory.png" alt="inventory" /></div>
-          <div>Manage Inventory</div>
-        </div>
-      </NuxtLink>
-      <NuxtLink to="/dashboard/customerList">
-        <div>
-          <div class="h-160px w-231px" ><img src="~assets/customer.png" alt="customer"/></div>
-          <div>List of Customers</div>
-        </div>
-      </NuxtLink>
-      <NuxtLink to="/dashboard/activity">
-        <div>
-          <div class="h-170px w-170px"><img src="~assets/history.png" alt="activity"/></div>
-          <div>Admin Activity</div>
-        </div>
-      </NuxtLink>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    let user = this.$store.getters['auth/getUser'] 
+    if (!isAuthenticated) {
+      this.$router.push('/login')
+    }
+    else if (isAuthenticated && user.role == 1) {
+      this.$router.push('/profile')
+    }
+  },
+}
 </script>
 
 <style></style>
