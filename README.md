@@ -1,20 +1,30 @@
-# pharm-frontend
+# UWI Pharmacy's Frontend Respository
 
-## Build Setup
+## Dependencies
+* NPM installer and Node.js (Installation information found in Wiki)
+* TailwindCSS
+* Axios
+* Nuxt-PWA
+* VueSlideout
+* Persisted State
 
-```bash
-# install dependencies
-$ npm install
+## Running the App Locally
+After cloning the repository,
 
-# serve with hot reload at localhost:3000
+### serve in dev mode, with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
+### build for production
+$ npm run build
+
+### serve in production mode
+$ npm start
+
+### build for production and launch server
 $ npm run build
 $ npm run start
 
-# generate static project
+### generate static project
 $ npm run generate
-```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+More about running the code can be found in the wiki page.
