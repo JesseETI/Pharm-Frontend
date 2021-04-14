@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node" : "12.16.2"
+    "node": "12.16.2"
   },
   "scripts": {
     "dev": "nuxt",
@@ -17,7 +17,6 @@
     "@hyjiacan/vue-slideout": "^3.0.0-beta1",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/pwa": "^3.3.4",
-    "bootstrap-vue": "^2.21.2",
     "cookie": "^0.4.1",
     "core-js": "^3.8.2",
     "js-cookie": "^2.2.1",
