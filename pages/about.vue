@@ -51,6 +51,20 @@
             <img src="../assets/default.jpeg" alt="Picture of Storefront" />
           </div>
         </div>
+        <div class="mt-10 flex flex-col justify-center items-center">
+          <a
+            class="text-blue-600 underline"
+            target="_blank"
+            href="https://goo.gl/maps/HPVitoPpP9wNRgER9"
+          >
+            See More on Google Maps
+          </a>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.3025756027158!2d-61.39915116102423!3d10.640764063314455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c3601be64eadfe3%3A0xb71811b7e459579e!2sUWI%20St%20Augustine%20Pharmacy%20and%20Health%20Centre!5e0!3m2!1sen!2stt!4v1618370139585!5m2!1sen!2stt"
+            class="w-full h-screen/2"
+            loading="lazy"
+          ></iframe>
+        </div>
       </main>
       <Footer />
     </body>

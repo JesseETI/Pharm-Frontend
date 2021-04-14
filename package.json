@@ -20,6 +20,7 @@
     "js-cookie": "^2.2.1",
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.12",
+    "nuxt-gmaps": "^1.2.10",
     "nuxt-gsap": "^0.1.4",
     "puppeteer": "^8.0.0",
     "sass-loader": "^10.1.1",

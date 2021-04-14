@@ -43,8 +43,6 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    //bootstrap for nuxt
-
   ],
 
   bootstrapVue: {
