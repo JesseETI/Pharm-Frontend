@@ -42,7 +42,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ commit }, user) {
+  login({ commit }, user) {
     // make an API call to login the user with an email address and password
     const data = JSON.stringify({
       email: user.email,
@@ -55,7 +55,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/auth', data, axiosConfig)
       .then((resp) => {
         // commit the user and tokens to the state
@@ -69,7 +69,7 @@ export const actions = {
       })
   },
 
-  async register({ commit }, user) {
+  register({ commit }, user) {
     // make an API call to register the user
     const data = JSON.stringify({
       fname: user.fname,
@@ -86,7 +86,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/signup', data, axiosConfig)
       .then((resp) => {
         alert('Your Profile has been created.')
@@ -99,7 +99,7 @@ export const actions = {
   },
 
   // given the current refresh token, refresh the user's access token to prevent expiry
-  async refresh({ commit, state }) {
+  refresh({ commit, state }) {
     const { refreshToken } = state
 
     // make an API call using the refresh token to generate a new access token
@@ -107,7 +107,7 @@ export const actions = {
       data: {
         data: { payload },
       },
-    } = await this.$axios.post('/api/auth/refresh', { refreshToken })
+    } = this.$axios.post('/api/auth/refresh', { refreshToken })
 
     commit(AUTH_MUTATIONS.SET_PAYLOAD, payload)
   },
@@ -117,7 +117,7 @@ export const actions = {
     commit(AUTH_MUTATIONS.LOGOUT)
   },
 
-  async getUserDetails({ commit, state }) {
+  getUserDetails({ commit, state }) {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$get('/user', axiosConfig)
       .then((resp) => {
         commit(AUTH_MUTATIONS.SET_USER, resp)

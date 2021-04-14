@@ -42,23 +42,23 @@ export const getters = {
 // JWT Tokens are passed where the Backend needs Authentication credentials
 export const actions = {
   // get all products from api and store it in state via mutation
-  async getProducts({ commit }, pageNo) {
-    await this.$axios
+  getProducts({ commit }, pageNo) {
+    this.$axios
       .$get(`products`, { params: { page: pageNo } })
       .then((resp) => commit('SET_PRODUCTS', resp))
       .catch((err) => console.log(err))
   },
   // get all product categories from api and store it in state via mutation
-  async getProductCategories({ commit }) {
-    await this.$axios
+  getProductCategories({ commit }) {
+    this.$axios
       .$get(`product_categories`)
       .then((resp) => commit('SET_PRODUCT_CATEGORIES', resp))
       .catch((err) => console.log(err))
   },
   // Currently implementing - future proofing instead of next & prev buttons
   // use numbers
-  async getPaginationDetails({ commit }) {
-    await this.$axios
+  getPaginationDetails({ commit }) {
+    this.$axios
       .$get(`products_page`, { params: { page: 1 } })
       .then((resp) => commit('SET_PAGINATION_DETAILS', resp))
       .catch((err) => console.log(err))
@@ -69,7 +69,7 @@ export const actions = {
   removeFromCart({ commit }, product) {
     commit('REMOVE_FROM_CART', product)
   },
-  async searchProduct({ commit }, searchProduct) {
+  searchProduct({ commit }, searchProduct) {
     // make an API call to search a term entered in search bar
     const data = JSON.stringify({
       term: searchProduct.term,
@@ -81,7 +81,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/search-product', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_PRODUCT_RESULTS', resp)
@@ -91,7 +91,7 @@ export const actions = {
         alert('Search Failed. Please contact UWI HSU.')
       })
   },
-  async searchOrder({ commit }, searchOrder) {
+  searchOrder({ commit }, searchOrder) {
     // make an API call to search a term entered in search bar
     const data = JSON.stringify({
       term: searchOrder.term,
@@ -103,7 +103,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/search-order', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_ORDER_RESULTS', resp)
@@ -113,7 +113,7 @@ export const actions = {
         alert('Search Failed. Please contact UWI HSU.')
       })
   },
-  async getOrders({ commit, rootState }) {
+  getOrders({ commit, rootState }) {
     // get all orders
     const axiosConfig = {
       headers: {
@@ -122,14 +122,14 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$get('/orders', axiosConfig)
       .then((resp) => {
         commit('SET_ORDERS', resp)
       })
       .catch((err) => console.log(err))
   },
-  async getUserOrders({ commit, rootState }) {
+  getUserOrders({ commit, rootState }) {
     // get user orders
     const axiosConfig = {
       headers: {
@@ -138,14 +138,14 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$get('/user-orders', axiosConfig)
       .then((resp) => {
         commit('SET_USER_ORDERS', resp)
       })
       .catch((err) => console.log(err))
   },
-  async checkout({ commit, state, rootState, getters }) {
+  checkout({ commit, state, rootState, getters }) {
     // checkout and create order from cart with default - processing state
     const data = JSON.stringify({
       cart: state.cart,
@@ -161,7 +161,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/create-order', data, axiosConfig)
       .then((resp) => {
         commit('SET_ORDER', resp)
@@ -171,7 +171,7 @@ export const actions = {
         alert('Checkout Failed. Please contact UWI HSU.')
       })
   },
-  async getCustomers({ commit, rootState }) {
+  getCustomers({ commit, rootState }) {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -179,14 +179,14 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$get('/customers', axiosConfig)
       .then((resp) => {
         commit('SET_CUSTOMERS', resp)
       })
       .catch((err) => console.log(err))
   },
-  async searchCustomer({ commit }, searchCustomer) {
+  searchCustomer({ commit }, searchCustomer) {
     // make an API call to customer search
     const data = JSON.stringify({
       term: searchCustomer.term,
@@ -198,7 +198,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/search-customer', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_CUSTOMER_RESULTS', resp)
@@ -208,7 +208,7 @@ export const actions = {
         alert('Search Failed. Please contact UWI HSU.')
       })
   },
-  async changeOrderStatus({ commit, rootState }, payload) {
+  changeOrderStatus({ commit, rootState }, payload) {
     // make change to Order Status - Admin only
     const axiosConfig = {
       headers: {
@@ -221,14 +221,14 @@ export const actions = {
       status: payload.status,
     })
 
-    await this.$axios
+    this.$axios
       .$put('/update-order', data, axiosConfig)
       .then((resp) => {
         commit('UPDATE_ORDER_STATUS', resp)
       })
       .catch((err) => console.log(err))
   },
-  async changeProductStatus({ commit, rootState }, payload) {
+  changeProductStatus({ commit, rootState }, payload) {
     // admin - change product status
     const axiosConfig = {
       headers: {
@@ -241,14 +241,14 @@ export const actions = {
       status: payload.status,
     })
 
-    await this.$axios
+    this.$axios
       .$put('/update-product', data, axiosConfig)
       .then((resp) => {
         commit('UPDATE_PRODUCT_STATUS', resp)
       })
       .catch((err) => console.log(err))
   },
-  async createProduct({ commit, rootState }, product) {
+  createProduct({ commit, rootState }, product) {
     // create product - admin
     const axiosConfig = {
       headers: {
@@ -257,7 +257,7 @@ export const actions = {
       },
     }
 
-    await this.$axios
+    this.$axios
       .$post('/create-product', product, axiosConfig)
       .then((resp) => {
         commit('UPDATE_PRODUCT_STATUS', resp)
