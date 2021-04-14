@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'UWI Pharmacy | HSU',
+    title: 'UWI Pharmacy | St. Augustine',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -54,7 +54,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8080/', // Used as fallback if no runtime config is provided
+    baseURL: 'https://pharmacy-app-2021.herokuapp.com', // Used as fallback if no runtime config is provided
   },
 
   publicRuntimeConfig: {
