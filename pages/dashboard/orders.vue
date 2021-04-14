@@ -22,7 +22,7 @@
             <button @click="clearSearch" class="underline text-blue-600" v-if="searchedOrders">Clear Search</button>
         </div>
 
-        <table v-if="orders != ''" class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto">
+        <table class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto">
          <!-- changes caption and data depending on if a search was made -->
           <caption v-if="!searchedOrders">UWI Pharmacy's past and present orders</caption>
           <caption v-else-if="searchedOrders == ''">No orders were found from your search.</caption>
@@ -63,7 +63,7 @@
 
         </table>
 
-        <p class="text-center" v-else>No orders made to UWI Pharmacy yet.</p>
+        <p class="text-center" v-if="searchedOrders == ''">No orders made to UWI Pharmacy yet.</p>
 
       </div>
     </div>
@@ -90,10 +90,10 @@ export default {
   },
   computed: {
     orders() {
-      return this.$store.getters.getOrders
+      return this.$store.state.orders
     },
     searchedOrders() {
-      return this.$store.getters.getSearchedOrders
+      return this.$store.state.searchOrderResults
     }
   },
   created() {

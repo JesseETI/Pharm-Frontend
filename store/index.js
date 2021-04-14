@@ -35,15 +35,6 @@ export const getters = {
     })
     return itemCount
   },
-  getOrders: (state) => {
-    return state.orders
-  },
-  getUserOrders: (state) => {
-    return state.userOrders
-  },
-  getSearchedOrders: (state) => {
-    return state.searchOrderResults
-  },
 }
 
 // to handle dispatched actions from pages

@@ -119,10 +119,10 @@ export default {
     async deleteCustomer(customer) {
       if (confirm("Do you want to delete this customer?\n" + customer.first_name + " " + customer.last_name)) {
         await this.$axios
-          .$delete('delete-customer', { params: { id: customer.id } })
+          .$delete('delete-customer', { params: { email: customer.email } })
           .then((resp) => {
-            alert('Deleted: ' + resp.deleted)
             if (resp.deleted) {
+              alert('Deleted: ' + customer.first_name + " " + customer.last_name)
               if (this.$store.state.searchCustomerResults == null) {
                 const index = this.$store.state.customers.findIndex(
                   (res) => res.email === customer.email
@@ -136,7 +136,7 @@ export default {
               }
             }
           })
-          .catch((err) => alert("Cannot delete the customer if they're involved in an order."))
+          .catch((err) => console.log(err))
       }
     },
   },

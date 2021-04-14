@@ -178,8 +178,11 @@ export default {
             this.$store.state.searchProductResults.splice(index, 1)
             }
           }
+          else {
+            alert("Cannot delete the product if it's in an order.")
+          }
         })
-        .catch((err) => alert("Cannot delete the product if it's in an order."))
+        .catch((err) => console.log(err))
       }
     },
   },
