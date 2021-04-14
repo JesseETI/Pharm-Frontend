@@ -71,6 +71,9 @@ export default {
   pwa: {
     manifest: {
       lang: 'en',
+      icon: {
+        fileName: 'uwi-logo.jpg',
+   },
     },
   },
 

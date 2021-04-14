@@ -19,18 +19,25 @@
             />
             <button class="border-2 p-3 rounded">GO</button>
           </form>
-          <button @click="clearSearch" class="underline text-blue-600" v-if="searchedCustomers">Clear Search</button>
+          <button
+            v-if="searchedCustomers"
+            class="underline text-blue-600"
+            @click="clearSearch"
+          >
+            Clear Search
+          </button>
         </div>
 
         <table
           class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto"
         >
-
-        <!-- changes caption and data depending on if a search was made -->
+          <!-- changes caption and data depending on if a search was made -->
           <caption v-if="!searchedCustomers">
             Pharmacy's Customers
           </caption>
-          <caption v-else-if="searchedCustomers == ''">No customers were found from your search.</caption>
+          <caption v-else-if="searchedCustomers == ''">
+            No customers were found from your search.
+          </caption>
           <caption v-else>
             Customer(s) found from your search
           </caption>
@@ -45,9 +52,15 @@
           </thead>
 
           <tbody v-if="!searchedCustomers">
-            <tr v-for="customer in customers" :key="customer.id" class="border-2">
+            <tr
+              v-for="customer in customers"
+              :key="customer.id"
+              class="border-2"
+            >
               <td class="p-3">{{ customer.email }}</td>
-              <td class="p-3">{{ customer.first_name }} {{ customer.last_name }}</td>
+              <td class="p-3">
+                {{ customer.first_name }} {{ customer.last_name }}
+              </td>
               <td class="p-3">{{ customer.allergies }}</td>
               <td class="p-3">{{ customer.medicines }}</td>
               <td class="p-3 flex space-x-10">
@@ -62,15 +75,20 @@
           </tbody>
 
           <tbody v-else>
-            <tr v-for="customer in searchedCustomers" :key="customer.id" class="border-2">
+            <tr
+              v-for="customer in searchedCustomers"
+              :key="customer.id"
+              class="border-2"
+            >
               <td class="p-3">{{ customer.email }}</td>
-              <td class="p-3">{{ customer.first_name }} {{ customer.last_name }}</td>
+              <td class="p-3">
+                {{ customer.first_name }} {{ customer.last_name }}
+              </td>
               <td class="p-3">{{ customer.allergies }}</td>
               <td class="p-3">{{ customer.medicines }}</td>
               <td class="p-3 text-blue-600 underline">Edit Customer</td>
             </tr>
           </tbody>
-          
         </table>
       </div>
     </div>
@@ -94,15 +112,13 @@ export default {
     },
   },
   created() {
-    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
-    let user = this.$store.getters['auth/getUser'] 
+    const isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    const user = this.$store.getters['auth/getUser']
     if (!isAuthenticated) {
       this.$router.push('/login')
-    }
-    else if (isAuthenticated && user.role == 1) {
+    } else if (isAuthenticated && user.role == 1) {
       this.$router.push('/profile')
-    }
-    else {
+    } else {
       this.$store.dispatch('getCustomers')
     }
   },
@@ -111,27 +127,36 @@ export default {
     clearSearch() {
       this.$store.state.searchCustomerResults = null
     },
-    //make search for customers in API
+    // make search for customers in API
     searchCustomers() {
       this.$store.dispatch('searchCustomer', this.searchObj)
     },
-    //delete customer
+    // delete customer
     async deleteCustomer(customer) {
-      if (confirm("Do you want to delete this customer?\n" + customer.first_name + " " + customer.last_name)) {
+      if (
+        confirm(
+          'Do you want to delete this customer?\n' +
+            customer.first_name +
+            ' ' +
+            customer.last_name
+        )
+      ) {
         await this.$axios
           .$delete('delete-customer', { params: { email: customer.email } })
           .then((resp) => {
             if (resp.deleted) {
-              alert('Deleted: ' + customer.first_name + " " + customer.last_name)
+              alert(
+                'Deleted: ' + customer.first_name + ' ' + customer.last_name
+              )
               if (this.$store.state.searchCustomerResults == null) {
                 const index = this.$store.state.customers.findIndex(
                   (res) => res.email === customer.email
                 )
                 this.$store.state.customers.splice(index, 1)
-              }
-              else {
+              } else {
                 const index = this.$store.state.searchCustomerResults.findIndex(
-                  (res) => res.email === customer.email)
+                  (res) => res.email === customer.email
+                )
                 this.$store.state.searchCustomerResults.splice(index, 1)
               }
             }

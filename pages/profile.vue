@@ -73,7 +73,9 @@
           </tbody>
         </table>
 
-        <p v-if="orders = ''" class="text-center">No orders made from your account yet.</p>
+        <p v-if="(orders = '')" class="text-center">
+          No orders made from your account yet.
+        </p>
       </div>
     </div>
   </div>

@@ -21,8 +21,19 @@
             />
             <button class="border-2 p-3 rounded">GO</button>
           </form>
-          <button @click="clearSearch" class="underline text-blue-600" v-if="searchedProducts">Clear Search</button>
-          <NuxtLink to="inventory/new-product" class="underline text-blue-600" v-if="!searchedProducts">+ Create a Product +</NuxtLink>
+          <button
+            v-if="searchedProducts"
+            class="underline text-blue-600"
+            @click="clearSearch"
+          >
+            Clear Search
+          </button>
+          <NuxtLink
+            v-if="!searchedProducts"
+            to="inventory/new-product"
+            class="underline text-blue-600"
+            >+ Create a Product +</NuxtLink
+          >
         </div>
 
         <table
@@ -55,11 +66,11 @@
               <td class="p-3">${{ product.unit_retail_price }}</td>
               <td class="p-3 flex space-x-10">
                 <NuxtLink :to="`inventory/${product.slug}`" class="w-3/12">
-                <img
-                  src="~assets/edit_icon.png"
-                  alt="Edit Product"
-                  class="w-full p-3 bg-secondary hover:bg-primary"
-                />
+                  <img
+                    src="~assets/edit_icon.png"
+                    alt="Edit Product"
+                    class="w-full p-3 bg-secondary hover:bg-primary"
+                  />
                 </NuxtLink>
 
                 <img
@@ -83,12 +94,12 @@
               <td class="p-3">{{ product.QoH }}</td>
               <td class="p-3">${{ product.unit_retail_price }}</td>
               <td class="p-3 flex space-x-10">
-                 <NuxtLink :to="`inventory/${product.slug}`" class="w-3/12">
-                <img
-                  src="~assets/edit_icon.png"
-                  alt="Edit Product"
-                  class="w-full p-3 bg-secondary hover:bg-primary"
-                />
+                <NuxtLink :to="`inventory/${product.slug}`" class="w-3/12">
+                  <img
+                    src="~assets/edit_icon.png"
+                    alt="Edit Product"
+                    class="w-full p-3 bg-secondary hover:bg-primary"
+                  />
                 </NuxtLink>
 
                 <img
@@ -102,9 +113,17 @@
           </tbody>
         </table>
         <!--Navigation Buttons -->
-        <div class="m-auto w-3/12 space-x-10 mt-10"  v-if="!searchedProducts">
-          <button class="p-4 w-4/12 bg-primary text-white" @click="previousPage" v-if="pageNo > 1">Previous Page</button>
-          <button class="p-4 w-4/12 bg-primary text-white" @click="nextPage">Next Page</button>
+        <div v-if="!searchedProducts" class="m-auto w-3/12 space-x-10 mt-10">
+          <button
+            v-if="pageNo > 1"
+            class="p-4 w-4/12 bg-primary text-white"
+            @click="previousPage"
+          >
+            Previous Page
+          </button>
+          <button class="p-4 w-4/12 bg-primary text-white" @click="nextPage">
+            Next Page
+          </button>
         </div>
       </div>
     </div>
@@ -143,46 +162,46 @@ export default {
     clearSearch() {
       this.$store.state.searchProductResults = null
     },
-    //go to next 20 products
+    // go to next 20 products
     nextPage() {
       this.pageNo += 1
       this.$store.dispatch('getProducts', this.pageNo)
     },
-    //go to previous 20 products
+    // go to previous 20 products
     previousPage() {
       this.pageNo -= 1
       this.$store.dispatch('getProducts', this.pageNo)
     },
-     //make search for products in API
+    // make search for products in API
     searchInventory() {
       this.$store.dispatch('searchProduct', this.searchObj)
     },
-    //delete product
+    // delete product
     async deleteProduct(product) {
-      if (confirm("Do you want to delete this product?\n" + product.product_name)) { 
-      await this.$axios
-        .$delete('delete-product', { params: { slug: product.slug } })
-        .then((resp) => {
-          if (resp.deleted) {
-            alert('Deleted: ' + product.product_name)
-            if (this.$store.state.searchProductResults == null) {
-            const index = this.$store.state.products.findIndex(
-              (res) => res.slug === product.slug
-            )
-            this.$store.state.products.splice(index, 1)
+      if (
+        confirm('Do you want to delete this product?\n' + product.product_name)
+      ) {
+        await this.$axios
+          .$delete('delete-product', { params: { slug: product.slug } })
+          .then((resp) => {
+            if (resp.deleted) {
+              alert('Deleted: ' + product.product_name)
+              if (this.$store.state.searchProductResults == null) {
+                const index = this.$store.state.products.findIndex(
+                  (res) => res.slug === product.slug
+                )
+                this.$store.state.products.splice(index, 1)
+              } else {
+                const index = this.$store.state.searchProductResults.findIndex(
+                  (res) => res.slug === product.slug
+                )
+                this.$store.state.searchProductResults.splice(index, 1)
+              }
+            } else {
+              alert("Cannot delete the product if it's in an order.")
             }
-            else {
-              const index = this.$store.state.searchProductResults.findIndex(
-              (res) => res.slug === product.slug
-            )
-            this.$store.state.searchProductResults.splice(index, 1)
-            }
-          }
-          else {
-            alert("Cannot delete the product if it's in an order.")
-          }
-        })
-        .catch((err) => console.log(err))
+          })
+          .catch((err) => console.log(err))
       }
     },
   },
