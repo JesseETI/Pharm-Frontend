@@ -86,7 +86,14 @@
               </td>
               <td class="p-3">{{ customer.allergies }}</td>
               <td class="p-3">{{ customer.medicines }}</td>
-              <td class="p-3 text-blue-600 underline">Edit Customer</td>
+              <td class="p-3 text-blue-600 underline">
+                <img
+                  src="~assets/trash_icon.png"
+                  alt="Delete Product"
+                  class="w-3/12 p-3 bg-secondary hover:bg-primary"
+                  @click="deleteCustomer(customer)"
+                />
+              </td>
             </tr>
           </tbody>
         </table>
