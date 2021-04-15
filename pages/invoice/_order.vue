@@ -1,48 +1,51 @@
 <template>
   <div v-if="order" class="page a4">
     <div class="flex flex-col w-screen">
-      <div class="header flex bg-primary text-white py-10 px-5 place-content-between">
-        <button @click="goBack" class="underline mx-10 focus:outline-none">Go Back</button>
+      <div
+        class="header flex bg-primary text-white py-10 px-5 place-content-between"
+      >
+        <button class="underline mx-10 focus:outline-none" @click="goBack">
+          Go Back
+        </button>
         <h1 class="text-5xl">Invoice</h1>
-
 
         <div class="flex">
           <div class="text mx-20">
-              <p>UWI HSU Pharmacy</p>
-              <a href="mailto:hsu.pharmacy@sta.uwi.edu">E-mail: hsu.pharmacy@sta.uwi.edu</a>
-              <p>#: 662-2002</p>
-            </div>
+            <p>UWI HSU Pharmacy</p>
+            <a href="mailto:hsu.pharmacy@sta.uwi.edu"
+              >E-mail: hsu.pharmacy@sta.uwi.edu</a
+            >
+            <p>#: 662-2002</p>
+          </div>
 
           <div class="text">
-              <p>Billed to:</p>
-              <p>E-mail: {{ order.user.email }}</p>
-              <p>Name: {{order.user.first_name}} {{order.user.last_name}}</p>
-            </div>
-        </div> 
+            <p>Billed to:</p>
+            <p>E-mail: {{ order.user.email }}</p>
+            <p>Name: {{ order.user.first_name }} {{ order.user.last_name }}</p>
+          </div>
+        </div>
       </div>
-      
-
-      
 
       <div class="flex h-70screen w-full justify-center">
         <!--order review div-->
         <div class="order-review overflow-auto w-3/4 m-5">
+          <p>Order ID: {{ order.id }}</p>
+          <p>
+            Date of Issue: {{ order.date_placed }}
 
-           <p>Order ID: {{order.id}}</p>
-           <p>Date of Issue: {{order.date_placed}}
-
-          <!-- products loop -->
+            <!-- products loop -->
+          </p>
 
           <div class="bg-secondary p-4 my-10 flex justify-between">
             <h2 class="text-xl">Review Order</h2>
-          </div> 
+          </div>
 
           <div
             v-for="product in order.products"
             :key="product.id"
             class="product flex w-full p-5 shadow-lg h-2/12"
           >
-            <img :src="product.image" alt="" class="pr-10" />
+            <img src="~assets/med.png" alt="" class="pr-10" />
 
             <div class="text">
               <p class="font-thin">{{ product.product_name }}</p>
@@ -75,19 +78,36 @@
         >
           <p v-if="role == 2">
             Change Order Status:
-            <select class="border-4 border-gray-400 italic" v-model="status" name="orderStatus" id="orderStatus" @change="changeOrderStatus">
-              <option disabled selected hidden :value="null"> -- select an option -- </option>
+            <select
+              id="orderStatus"
+              v-model="status"
+              class="border-4 border-gray-400 italic"
+              name="orderStatus"
+              @change="changeOrderStatus"
+            >
+              <option disabled selected hidden :value="null">
+                -- select an option --
+              </option>
               <option value="processing">processing</option>
               <option value="denied">denied</option>
               <option value="ready">ready</option>
             </select>
           </p>
-          <br/>
-          <p>Order Status: 
-            <span class="text-yellow-600" v-if="currOrderStatus == 'processing'">{{currOrderStatus}}</span>
-            <span class="text-red-600" v-else-if="currOrderStatus == 'denied'">{{currOrderStatus}}</span>
-            <span class="text-green-600" v-else>{{currOrderStatus}}</span>
-            </p>
+          <br />
+          <p>
+            Order Status:
+            <span
+              v-if="currOrderStatus == 'processing'"
+              class="text-yellow-600"
+              >{{ currOrderStatus }}</span
+            >
+            <span
+              v-else-if="currOrderStatus == 'denied'"
+              class="text-red-600"
+              >{{ currOrderStatus }}</span
+            >
+            <span v-else class="text-green-600">{{ currOrderStatus }}</span>
+          </p>
           <br />
           <p>Order Method: Delivery</p>
           <br />
@@ -95,8 +115,10 @@
           <br />
           <p class="text-xl">Total: ${{ order.order_total }}</p>
           <br />
-          <button v-if="currOrderStatus == 'ready'" @click="printInvoice"
-          class="button bg-primary p-5 text-white text-lg text-center"
+          <button
+            v-if="currOrderStatus == 'ready'"
+            class="button bg-primary p-5 text-white text-lg text-center"
+            @click="printInvoice"
           >
             Print Invoice
           </button>
@@ -110,19 +132,35 @@
 export default {
   data() {
     return {
-      order : null,
+      order: null,
       role: 1,
-      status: null
+      status: null,
     }
   },
-  computed : {
+  computed: {
     currOrderStatus() {
       if (this.status) {
         return this.status
-      }
-      else {
+      } else {
         return this.order.status
       }
+    },
+  },
+  async created() {
+    const isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    const user = this.$store.getters['auth/getUser']
+
+    if (!isAuthenticated) {
+      this.$router.push('/login')
+    } else {
+      this.role = user.role
+
+      await this.$axios
+        .$get('order', { params: { id: this.$route.params.order } })
+        .then((resp) => {
+          this.order = resp
+        })
+        .catch((err) => console.log(err))
     }
   },
   methods: {
@@ -142,43 +180,24 @@ export default {
       })
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     printInvoice() {
       try {
         // Print for Safari browser
         document.execCommand('print', false, null)
-      } 
-      catch {
-        //Print for chrome and other normal browsers :)
+      } catch {
+        // Print for chrome and other normal browsers :)
         window.print()
       }
     },
     changeOrderStatus() {
-      let payload = {
-        "orderID" : this.order.id,
-        "status" :this.status
+      const payload = {
+        orderID: this.order.id,
+        status: this.status,
       }
       this.$store.dispatch('changeOrderStatus', payload)
-    }
+    },
   },
-  async created() {
-    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
-    let user = this.$store.getters['auth/getUser'] 
-
-    if (!isAuthenticated) {
-      this.$router.push('/login')
-    }
-    else {
-      this.role = user.role
-
-      await this.$axios
-      .$get('order', { params: { id: this.$route.params.order } })
-      .then((resp) => {
-        this.order = resp
-      })
-      .catch((err) => console.log(err))
-      }
-  }
 }
 </script>

@@ -12,49 +12,47 @@
       </ul>
 
       <!-- search form -->
-      <form @submit.prevent="search" class="pl-10 ml-5 w-3/4">
+      <form class="pl-10 ml-5 w-3/4" @submit.prevent="search">
         <input
+          v-model="searchObj.term"
           type="text"
           class="rounded p-3 w-3/4 text-black"
           placeholder="Search for medicines in stock..."
           required
-          v-model="searchObj.term"
         />
         <button class="border-2 p-3 rounded">GO</button>
       </form>
-      
+
       <!-- User component management links-->
       <div class="flex w-1/4 px-10 items-center">
-        <NuxtLink to="/login" v-show="!isAuthenticated">
-        <img
-          src="~assets/profile.png"
-          alt=""
-          class="pr-10"
-        />
+        <NuxtLink v-show="!isAuthenticated" to="/login">
+          <img src="~assets/profile.png" alt="" class="pr-10" />
         </NuxtLink>
-        <NuxtLink to="/profile"  v-if="user" v-show="isAuthenticated && user.role == 1">
-        <img
-          src="~assets/profile.png"
-          alt=""
-          class="pr-10"
-          
-        />
+        <NuxtLink
+          v-if="user"
+          v-show="isAuthenticated && user.role == 1"
+          to="/profile"
+        >
+          <img src="~assets/profile.png" alt="" class="pr-10" />
         </NuxtLink>
-        
-        <NuxtLink to="/dashboard" v-if="user" v-show="isAuthenticated && user.role == 2">
-        <img
-          src="~assets/profile.png"
-          alt=""
-          class="pr-10"
-        />
 
+        <NuxtLink
+          v-if="user"
+          v-show="isAuthenticated && user.role == 2"
+          to="/dashboard"
+        >
+          <img src="~assets/profile.png" alt="" class="pr-10" />
         </NuxtLink>
-        <img src="~assets/basket.png" alt="" class="pr-10" @click="visibleCart = true"/>
+        <img
+          src="~assets/basket.png"
+          alt=""
+          class="pr-10"
+          @click="visibleCart = true"
+        />
 
         <!-- on click, clears all user data and logs user out -->
         <button v-show="isAuthenticated" @click="logout">Logout</button>
       </div>
-
     </nav>
     <!-- slideout that shows cart, rendered on client-side only
     as it's vue and JS native -->
@@ -63,13 +61,18 @@
         <Cart />
       </slideout>
     </client-only>
-    
   </div>
 </template>
 
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      visibleCart: false,
+      searchObj: [],
+    }
+  },
   computed: {
     user() {
       return this.$store.getters['auth/getUser']
@@ -78,10 +81,11 @@ export default {
       return this.$store.getters['auth/isAuthenticated']
     },
   },
-  data() {
-    return {
-      visibleCart: false,
-      searchObj: [],
+  created() {
+    // Get user details every render to update any changes from server
+    const isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    if (isAuthenticated) {
+      this.$store.dispatch('auth/getUserDetails')
     }
   },
   methods: {
@@ -94,14 +98,7 @@ export default {
     },
     logout() {
       this.$store.dispatch('auth/logout')
-    }
+    },
   },
-  created() {
-    // Get user details every render to update any changes from server
-    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
-    if (isAuthenticated) {
-      this.$store.dispatch('auth/getUserDetails')
-    }
-  } 
 }
 </script>

@@ -3,7 +3,7 @@
     <Header />
 
     <div class="flex h-90screen">
-      <Profile/>
+      <Profile />
 
       <!-- dashboard shortcuts -->
 
@@ -46,12 +46,11 @@
 <script>
 export default {
   created() {
-    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
-    let user = this.$store.getters['auth/getUser'] 
+    const isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    const user = this.$store.getters['auth/getUser']
     if (!isAuthenticated) {
       this.$router.push('/login')
-    }
-    else if (isAuthenticated && user.role == 1) {
+    } else if (isAuthenticated && user.role === 1) {
       this.$router.push('/profile')
     }
   },

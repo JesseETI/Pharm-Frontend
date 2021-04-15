@@ -21,7 +21,7 @@
 export default {
   created() {
     // if already logged in go to profile (prevents authenticated user from going to page again)
-    let isAuthenticated = this.$store.getters['auth/isAuthenticated']
+    const isAuthenticated = this.$store.getters['auth/isAuthenticated']
     if (isAuthenticated) {
       this.$router.push('/profile')
     }

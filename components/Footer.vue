@@ -9,7 +9,7 @@
           <li><NuxtLink to="/about">About</NuxtLink></li>
         </ul>
       </div>
-      
+
       <div class="shopping">
         <h3 class="text-xl">Shopping</h3>
         <ul aria-label="Shopping" class="mt-5">
@@ -21,15 +21,14 @@
       <div class="account-info">
         <h3 class="text-xl">My Account</h3>
         <ul aria-label="Shopping" class="mt-5">
-          <li class="mb-2"><li class="mb-2"><NuxtLink to="/login">Login</NuxtLink></li>
+          <li class="mb-2"></li>
+          <li class="mb-2"><NuxtLink to="/login">Login</NuxtLink></li>
           <li class="mb-2"><NuxtLink to="/register">Sign Up</NuxtLink></li>
           <li><NuxtLink to="/profile">My Orders</NuxtLink></li>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
 
-<script>
-</script>
+<script></script>

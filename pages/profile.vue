@@ -33,6 +33,7 @@
         <h2 class="text-4xl m-10">Manage Orders</h2>
 
         <table
+          v-if="orders != ''"
           class="table-fixed w-11/12 items-center text-center border-2 border-blue-600 bg-white shadow-lg m-auto"
         >
           <caption>
@@ -73,9 +74,7 @@
           </tbody>
         </table>
 
-        <p v-if="(orders = '')" class="text-center">
-          No orders made from your account yet.
-        </p>
+        <p v-else class="text-center">No orders made from your account yet.</p>
       </div>
     </div>
   </div>
@@ -91,7 +90,7 @@ export default {
   },
   computed: {
     orders() {
-      return this.$store.state.userOrders
+      return this.$store.getters.getUserOrders
     },
     customer() {
       return this.$store.getters['auth/getUser']

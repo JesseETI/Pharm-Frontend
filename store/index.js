@@ -27,6 +27,9 @@ export const getters = {
       return 0
     }
   },
+  getUserOrders: (state) => {
+    return state.userOrders
+  },
   // # of items in cart & checkout
   itemCount: (state) => {
     let itemCount = 0
@@ -290,6 +293,7 @@ export const mutations = {
       state.cart.splice(existingProduct, 1)
     }
     state.cart.push(product)
+    this.$router.push('/store')
   },
   REMOVE_FROM_CART(state, product) {
     const index = state.cart.findIndex((res) => res.slug === product.slug)

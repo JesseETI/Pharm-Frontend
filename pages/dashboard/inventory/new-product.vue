@@ -209,20 +209,19 @@ export default {
       this.$router.go(-1)
     },
     createProduct() {
-      const formData = new FormData();
-      
-      formData.append("name", this.product.name)
-      formData.append("code", this.product.code)
-      formData.append("supplier", this.product.supplier)
-      formData.append("category", this.product.category)
-      formData.append("image", this.product.image)
-      formData.append("supplier_cost_price", this.product.supplier_cost_price)
-      formData.append("QoH", this.product.QoH)
-      formData.append("stock_unit", this.product.stock_unit)
-      formData.append("unit_retail_price", this.product.unit_retail_price)
+      const formData = new FormData()
+
+      formData.append('name', this.product.name)
+      formData.append('code', this.product.code)
+      formData.append('supplier', this.product.supplier)
+      formData.append('category', this.product.category)
+      formData.append('image', this.product.image)
+      formData.append('supplier_cost_price', this.product.supplier_cost_price)
+      formData.append('QoH', this.product.QoH)
+      formData.append('stock_unit', this.product.stock_unit)
+      formData.append('unit_retail_price', this.product.unit_retail_price)
 
       this.$store.dispatch('createProduct', formData)
-      
     },
   },
 }

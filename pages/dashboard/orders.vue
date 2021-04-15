@@ -133,7 +133,7 @@ export default {
     const user = this.$store.getters['auth/getUser']
     if (!isAuthenticated) {
       this.$router.push('/login')
-    } else if (isAuthenticated && user.role == 1) {
+    } else if (isAuthenticated && user.role === 1) {
       this.$router.push('/profile')
     } else {
       this.$store.dispatch('getOrders')

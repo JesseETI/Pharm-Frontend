@@ -72,7 +72,7 @@ export default {
     manifest: {
       lang: 'en',
       icon: {
-        fileName: 'uwi-logo.jpg',
+        fileName: '~assets/uwi-logo.jpg',
    },
     },
   },

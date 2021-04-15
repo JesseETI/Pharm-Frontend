@@ -11,8 +11,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "npm run lint:js",
-    "heroku-postbuild": "npm run build"
+    "lint": "npm run lint:js"
   },
   "dependencies": {
     "@hyjiacan/vue-slideout": "^3.0.0-beta1",
