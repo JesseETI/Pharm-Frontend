@@ -64,7 +64,7 @@
 
             <!---Right (Image) Side of the form -->
             <div class="right w-6/12 flex flex-col justify-center items-center">
-              <img :src="product.image" alt="" class="product-img w-1/4" />
+              <img src="~assets/med.png" alt="" class="product-img w-1/4" />
               <input
                 id="category"
                 type="file"
