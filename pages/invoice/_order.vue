@@ -45,7 +45,6 @@
             :key="product.id"
             class="product flex w-full p-5 shadow-lg h-2/12"
           >
-            <img src="~assets/med.png" alt="" class="pr-10" />
 
             <div class="text">
               <p class="font-thin">{{ product.product_name }}</p>
