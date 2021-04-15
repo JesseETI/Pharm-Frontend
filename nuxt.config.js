@@ -71,9 +71,10 @@ export default {
   pwa: {
     manifest: {
       lang: 'en',
+      name: 'UWI Pharmacy App',
       icon: {
-        fileName: '~assets/uwi-logo.jpg',
-   },
+        fileName: 'uwi-logo.jpg',
+      },
     },
   },
 
