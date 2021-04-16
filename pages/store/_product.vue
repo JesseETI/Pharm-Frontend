@@ -2,7 +2,10 @@
   <div>
     <!-- Product display page-->
     <Header />
-    <div v-if="product" class="m-10 min-h-full min-w-screen min-h-screen">
+    <div
+      v-if="!$fetchState.pending"
+      class="m-10 min-h-full min-w-screen min-h-screen"
+    >
       <h2 class="text-gray-500">
         <!-- Current location within site -->
         Store | {{ product.category }} |
@@ -84,7 +87,7 @@ export default {
       quantity: 1, // intial quantity for all products
     }
   },
-  async created() {
+  async fetch() {
     // get product details every reload for instant changes
     await this.$axios
       .$get('product', { params: { slug: this.$route.params.product } })

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="order" class="page a4">
+  <div v-if="!$fetchState.pending" class="page a4">
     <div class="flex flex-col w-screen">
       <div
         class="header flex bg-primary text-white py-10 px-5 place-content-between"
@@ -18,7 +18,7 @@
             <p>#: 662-2002</p>
           </div>
 
-          <div class="text">
+          <div v-if="order.user" class="text">
             <p>Billed to:</p>
             <p>E-mail: {{ order.user.email }}</p>
             <p>Name: {{ order.user.first_name }} {{ order.user.last_name }}</p>
@@ -45,7 +45,6 @@
             :key="product.id"
             class="product flex w-full p-5 shadow-lg h-2/12"
           >
-
             <div class="text">
               <p class="font-thin">{{ product.product_name }}</p>
               <br />
@@ -93,7 +92,7 @@
             </select>
           </p>
           <br />
-          <p>
+          <p v-if="currOrderStatus">
             Order Status:
             <span
               v-if="currOrderStatus == 'processing'"
@@ -131,10 +130,26 @@
 export default {
   data() {
     return {
-      order: null,
+      order: {
+        user: null,
+      },
       role: 1,
       status: null,
     }
+  },
+  async fetch() {
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    await this.$axios
+      .$get('order', { params: { id: this.$route.params.order } }, axiosConfig)
+      .then((resp) => {
+        this.order = resp
+      })
+      .catch((err) => console.log(err))
   },
   computed: {
     currOrderStatus() {
@@ -145,7 +160,7 @@ export default {
       }
     },
   },
-  async created() {
+  created() {
     const isAuthenticated = this.$store.getters['auth/isAuthenticated']
     const user = this.$store.getters['auth/getUser']
 
@@ -153,13 +168,6 @@ export default {
       this.$router.push('/login')
     } else {
       this.role = user.role
-
-      await this.$axios
-        .$get('order', { params: { id: this.$route.params.order } })
-        .then((resp) => {
-          this.order = resp
-        })
-        .catch((err) => console.log(err))
     }
   },
   methods: {

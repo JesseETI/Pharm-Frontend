@@ -58,6 +58,7 @@ export const actions = {
       .then((resp) => commit('SET_PRODUCT_CATEGORIES', resp))
       .catch((err) => console.log(err))
   },
+
   // Currently implementing - future proofing instead of next & prev buttons
   // use numbers
   getPaginationDetails({ commit }) {
@@ -66,6 +67,7 @@ export const actions = {
       .then((resp) => commit('SET_PAGINATION_DETAILS', resp))
       .catch((err) => console.log(err))
   },
+
   addToCart({ commit }, product) {
     commit('ADD_TO_CART', product)
   },
@@ -94,7 +96,7 @@ export const actions = {
         alert('Search Failed. Please contact UWI HSU.')
       })
   },
-  searchOrder({ commit }, searchOrder) {
+  searchOrder({ commit, rootState }, searchOrder) {
     // make an API call to search a term entered in search bar
     const data = JSON.stringify({
       term: searchOrder.term,
@@ -103,6 +105,7 @@ export const actions = {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'JWT ' + rootState.auth.accessToken,
       },
     }
 
@@ -189,7 +192,7 @@ export const actions = {
       })
       .catch((err) => console.log(err))
   },
-  searchCustomer({ commit }, searchCustomer) {
+  searchCustomer({ commit, rootState }, searchCustomer) {
     // make an API call to customer search
     const data = JSON.stringify({
       term: searchCustomer.term,
@@ -198,6 +201,7 @@ export const actions = {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'JWT ' + rootState.auth.accessToken,
       },
     }
 

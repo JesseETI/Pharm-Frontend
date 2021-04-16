@@ -26,7 +26,10 @@ export default ({ store, req }) => {
         }
       },
       setItem: (key, value) =>
-        Cookies.set(key, value, { expires: 365, secure: false }),
+        Cookies.set(key, value, {
+          expires: 365,
+          secure: false,
+        }),
       removeItem: (key) => Cookies.remove(key),
     },
   })(store)

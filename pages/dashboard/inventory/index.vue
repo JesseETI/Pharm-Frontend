@@ -181,8 +181,18 @@ export default {
       if (
         confirm('Do you want to delete this product?\n' + product.product_name)
       ) {
+        const axiosConfig = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+
         await this.$axios
-          .$delete('delete-product', { params: { slug: product.slug } })
+          .$delete(
+            'delete-product',
+            { params: { slug: product.slug } },
+            axiosConfig
+          )
           .then((resp) => {
             if (resp.deleted) {
               alert('Deleted: ' + product.product_name)

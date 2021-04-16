@@ -1,5 +1,5 @@
 <template>
-  <div v-if="product" class="flex flex-col w-screen">
+  <div v-if="!$fetchState.pending" class="flex flex-col w-screen">
     <!--Header-->
     <div class="header flex bg-primary text-white py-10 px-5">
       <button class="underline mx-10 focus:outline-none" @click="goBack">
@@ -131,7 +131,15 @@ export default {
       product: null,
     }
   },
-  async created() {
+  async fetch() {
+    await this.$axios
+      .$get('product', { params: { slug: this.$route.params.product } })
+      .then((resp) => {
+        this.product = resp
+      })
+      .catch((err) => console.log(err))
+  },
+  created() {
     const isAuthenticated = this.$store.getters['auth/isAuthenticated']
     const user = this.$store.getters['auth/getUser']
 
@@ -139,14 +147,6 @@ export default {
       this.$router.push('/login')
     } else if (isAuthenticated && user.role === 1) {
       this.$router.push('/profile')
-    } else {
-      // get updates on product every creation
-      await this.$axios
-        .$get('product', { params: { slug: this.$route.params.product } })
-        .then((resp) => {
-          this.product = resp
-        })
-        .catch((err) => console.log(err))
     }
   },
   methods: {

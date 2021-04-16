@@ -56,7 +56,7 @@ export default {
     } else if (isAuthenticated && user.role === 1) {
       this.$router.push('/profile')
     } else {
-      this.$store.dispatch('getUserDetails')
+      this.$store.dispatch('auth/getUserDetails')
     }
   },
 }

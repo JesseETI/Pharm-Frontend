@@ -116,7 +116,6 @@ export const actions = {
   logout({ commit, state }) {
     commit(AUTH_MUTATIONS.LOGOUT)
   },
-
   getUserDetails({ commit, state }) {
     const axiosConfig = {
       headers: {

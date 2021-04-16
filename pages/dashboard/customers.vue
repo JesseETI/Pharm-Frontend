@@ -139,7 +139,7 @@ export default {
       this.$store.dispatch('searchCustomer', this.searchObj)
     },
     // delete customer
-    async deleteCustomer(customer) {
+    deleteCustomer(customer) {
       if (
         confirm(
           'Do you want to delete this customer?\n' +
@@ -148,8 +148,18 @@ export default {
             customer.last_name
         )
       ) {
-        await this.$axios
-          .$delete('delete-customer', { params: { email: customer.email } })
+        const axiosConfig = {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+
+        this.$axios
+          .$delete(
+            'delete-customer',
+            { params: { email: customer.email } },
+            axiosConfig
+          )
           .then((resp) => {
             if (resp.deleted) {
               alert(
