@@ -47,14 +47,14 @@ export const actions = {
   // get all products from api and store it in state via mutation
   getProducts({ commit }, pageNo) {
     this.$axios
-      .$get(`products`, { params: { page: pageNo } })
+      .$get(`/api/products`, { params: { page: pageNo } })
       .then((resp) => commit('SET_PRODUCTS', resp))
       .catch((err) => console.log(err))
   },
   // get all product categories from api and store it in state via mutation
   getProductCategories({ commit }) {
     this.$axios
-      .$get(`product_categories`)
+      .$get(`/api/product_categories`)
       .then((resp) => commit('SET_PRODUCT_CATEGORIES', resp))
       .catch((err) => console.log(err))
   },
@@ -63,7 +63,7 @@ export const actions = {
   // use numbers
   getPaginationDetails({ commit }) {
     this.$axios
-      .$get(`products_page`, { params: { page: 1 } })
+      .$get(`/api/products_page`, { params: { page: 1 } })
       .then((resp) => commit('SET_PAGINATION_DETAILS', resp))
       .catch((err) => console.log(err))
   },
@@ -87,7 +87,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/search-product', data, axiosConfig)
+      .$post('/api/search-product', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_PRODUCT_RESULTS', resp)
       })
@@ -110,7 +110,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/search-order', data, axiosConfig)
+      .$post('/api/search-order', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_ORDER_RESULTS', resp)
       })
@@ -129,7 +129,7 @@ export const actions = {
     }
 
     this.$axios
-      .$get('/orders', axiosConfig)
+      .$get('/api/orders', axiosConfig)
       .then((resp) => {
         commit('SET_ORDERS', resp)
       })
@@ -145,7 +145,7 @@ export const actions = {
     }
 
     this.$axios
-      .$get('/user-orders', axiosConfig)
+      .$get('/api/user-orders', axiosConfig)
       .then((resp) => {
         commit('SET_USER_ORDERS', resp)
       })
@@ -168,7 +168,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/create-order', data, axiosConfig)
+      .$post('/api/create-order', data, axiosConfig)
       .then((resp) => {
         commit('SET_ORDER', resp)
       })
@@ -186,7 +186,7 @@ export const actions = {
     }
 
     this.$axios
-      .$get('/customers', axiosConfig)
+      .$get('/api/customers', axiosConfig)
       .then((resp) => {
         commit('SET_CUSTOMERS', resp)
       })
@@ -206,7 +206,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/search-customer', data, axiosConfig)
+      .$post('/api/search-customer', data, axiosConfig)
       .then((resp) => {
         commit('SET_SEARCH_CUSTOMER_RESULTS', resp)
       })
@@ -229,7 +229,7 @@ export const actions = {
     })
 
     this.$axios
-      .$put('/update-order', data, axiosConfig)
+      .$put('/api/update-order', data, axiosConfig)
       .then((resp) => {
         commit('UPDATE_ORDER_STATUS', resp)
       })
@@ -249,7 +249,7 @@ export const actions = {
     })
 
     this.$axios
-      .$put('/update-product', data, axiosConfig)
+      .$put('/api/update-product', data, axiosConfig)
       .then((resp) => {
         commit('UPDATE_PRODUCT_STATUS', resp)
       })
@@ -265,7 +265,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/create-product', product, axiosConfig)
+      .$post('/api/create-product', product, axiosConfig)
       .then((resp) => {
         commit('UPDATE_PRODUCT_STATUS', resp)
       })

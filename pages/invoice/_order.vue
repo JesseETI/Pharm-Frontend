@@ -145,7 +145,11 @@ export default {
     }
 
     await this.$axios
-      .$get('order', { params: { id: this.$route.params.order } }, axiosConfig)
+      .$get(
+        '/api/order',
+        { params: { id: this.$route.params.order } },
+        axiosConfig
+      )
       .then((resp) => {
         this.order = resp
       })

@@ -90,7 +90,7 @@ export default {
   async fetch() {
     // get product details every reload for instant changes
     await this.$axios
-      .$get('product', { params: { slug: this.$route.params.product } })
+      .$get('/api/product', { params: { slug: this.$route.params.product } })
       .then((resp) => {
         this.product = resp
       })

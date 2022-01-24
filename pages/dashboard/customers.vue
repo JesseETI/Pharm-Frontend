@@ -156,7 +156,7 @@ export default {
 
         this.$axios
           .$delete(
-            'delete-customer',
+            '/api/delete-customer',
             { params: { email: customer.email } },
             axiosConfig
           )

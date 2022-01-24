@@ -56,7 +56,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/auth', data, axiosConfig)
+      .$post('/api/auth', data, axiosConfig)
       .then((resp) => {
         // commit the user and tokens to the state
         alert('Logged in successfully')
@@ -87,7 +87,7 @@ export const actions = {
     }
 
     this.$axios
-      .$post('/signup', data, axiosConfig)
+      .$post('/api/signup', data, axiosConfig)
       .then((resp) => {
         alert('Your Profile has been created.')
         this.$router.push('/login')
@@ -125,7 +125,7 @@ export const actions = {
     }
 
     this.$axios
-      .$get('/user', axiosConfig)
+      .$get('/api/user', axiosConfig)
       .then((resp) => {
         commit(AUTH_MUTATIONS.SET_USER, resp)
       })

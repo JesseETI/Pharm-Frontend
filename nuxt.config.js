@@ -8,12 +8,21 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'The official e-commerce website of HSU UWI Pharmacy, St. Augustine.' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'The official e-commerce website of HSU UWI Pharmacy, St. Augustine.',
+      },
     ],
     link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap'}, 
-  ],
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -21,8 +30,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '~/plugins/vueSlideout.js', mode: 'client'},
-    { src: '~/plugins/persistedState.js'},
+    { src: '~/plugins/vueSlideout.js', mode: 'client' },
+    { src: '~/plugins/persistedState.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -31,10 +40,13 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    ['@nuxtjs/eslint-module', {
-      fix: true
-    }],
-    ['@nuxtjs/tailwindcss']
+    [
+      '@nuxtjs/eslint-module',
+      {
+        fix: true,
+      },
+    ],
+    ['@nuxtjs/tailwindcss'],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -47,24 +59,31 @@ export default {
 
   bootstrapVue: {
     bootstrapCSS: false, // Or `css: false`
-    bootstrapVueCSS: false // Or `bvCSS: false`
+    bootstrapVueCSS: false, // Or `bvCSS: false`
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://pharmacy-app-2021.herokuapp.com/', // Used as fallback if no runtime config is provided
+    proxy: true,
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'https://pharmacy-app-2021.herokuapp.com',
+      pathRewrite: { '^/api/': '' },
+    },
   },
 
   publicRuntimeConfig: {
     axios: {
-      browserBaseURL: process.env.BROWSER_BASE_URL
-    }
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
   },
 
   privateRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL
-    }
+      baseURL: process.env.BASE_URL,
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

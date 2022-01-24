@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "12.16.2"
+    "node": "16.x"
   },
   "scripts": {
     "dev": "nuxt",
@@ -20,11 +20,10 @@
     "cookie": "^0.4.1",
     "core-js": "^3.8.2",
     "js-cookie": "^2.2.1",
-    "node-sass": "^5.0.0",
     "nuxt": "^2.14.12",
-    "nuxt-gmaps": "^1.2.10",
     "nuxt-gsap": "^0.1.4",
     "puppeteer": "^8.0.0",
+    "sass": "^1.49.0",
     "sass-loader": "^10.1.1",
     "vue-slideout": "^1.8.0",
     "vuex-persistedstate": "^4.0.0-beta.3"

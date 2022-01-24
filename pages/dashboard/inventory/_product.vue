@@ -133,7 +133,7 @@ export default {
   },
   async fetch() {
     await this.$axios
-      .$get('product', { params: { slug: this.$route.params.product } })
+      .$get('/api/product', { params: { slug: this.$route.params.product } })
       .then((resp) => {
         this.product = resp
       })

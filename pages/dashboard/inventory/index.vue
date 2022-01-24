@@ -189,7 +189,7 @@ export default {
 
         await this.$axios
           .$delete(
-            'delete-product',
+            '/api/delete-product',
             { params: { slug: product.slug } },
             axiosConfig
           )
