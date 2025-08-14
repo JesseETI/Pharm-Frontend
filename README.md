@@ -3,13 +3,20 @@
 # Documentation
 A comprehensive (91-page) project manual detailing project description, requirements & design specifications, implementation, testing, business aspects and financial considerations can be found here: https://docs.google.com/document/d/1fxAUCb7DTI963H1EBHzLAwpteBhYPSPpNQFbZ1F6wKE/edit?usp=sharing 
 
-# Prototype
-The initial prototype was done in Figma, to be approved by the stakeholder, before designing the eCommerce app.
-The UI design can be found at this link: https://www.figma.com/file/St7DbAbJyZhk6oflh1FwDp/Hi-Fi-Prototype?node-id=0%3A1
+# 🎨 Prototype
+The initial prototype was created in **Figma** and approved by the stakeholder before development of the eCommerce app.
 
+📌 **[View the Figma Design](https://www.figma.com/file/St7DbAbJyZhk6oflh1FwDp/Hi-Fi-Prototype?node-id=0%3A1)**
+
+---
 # Built With
-- Nuxt.js SSR Framework 
-- TailwindCSS
+- [Nuxt.js](https://nuxt.com/) – SSR Framework
+- [TailwindCSS](https://tailwindcss.com/) – Utility-first CSS
+- [Axios](https://axios-http.com/) – HTTP client
+- [Nuxt-PWA](https://pwa.nuxtjs.org/) – Progressive Web App support
+- [VueSlideout](https://www.npmjs.com/package/vue-slideout) – Side navigation menu
+- [Persisted State](https://www.npmjs.com/package/vuex-persistedstate) – Vuex state persistence
+
 
 # Deployed At
 ### Netlify
